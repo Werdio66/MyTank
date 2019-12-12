@@ -1,5 +1,7 @@
 package com._520.myTank;
 
+import com._520.util.ResourceMgr;
+
 import java.awt.*;
 import java.util.UUID;
 
@@ -10,26 +12,20 @@ public class Bullet {
 	// 子弹的速度
 	private static final int SPEED = 6;
 	// 子弹的宽度和高度
-	public static int WIDTH = 25;
-	public static int HEIGHT = 25;
+	public static int bulletWidth = ResourceMgr.bulletD.getWidth();
+	public static int bulletHeight = ResourceMgr.bulletD.getHeight();
 	 // 子弹的位置
 	private int x, y;
 	// 子弹的方向
 	private Dir dir;
-	//
-	private TankFrame tf = null;
-
+	// 子弹是否存活
+	private boolean live = true;
+	private TankFrame tf;
 	public Bullet(int x, int y, Dir dir, TankFrame tf) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.tf = tf;
-	}
-
-	public Bullet(int x, int y, Dir dir) {
-		this.x = x;
-		this.y = y;
-		this.dir = dir;
 	}
 
 	private void move() {
@@ -47,17 +43,37 @@ public class Bullet {
 				y += SPEED;
 				break;
 		}
+		// 子弹飞出边界
+		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
+			live = false;
 	}
 
 	// 将子弹画出来
 	public void paint(Graphics g) {
-		Color c = g.getColor();
-		g.setColor(Color.YELLOW);
-		g.fillRect(x,y,WIDTH,HEIGHT);
-		g.setColor(c);
+		// 删除子弹
+		if (!live && tf.bullets.size() > 0)
+			tf.bullets.remove(this);
+//		Color c = g.getColor();
+//		g.setColor(Color.RED);
+//		g.fillOval(x,y,WIDTH,HEIGHT);
+//		g.setColor(c);
+		// 图片版
+		switch (dir){
+			case DOWN:
+				g.drawImage(ResourceMgr.bulletD,x,y,null);
+				break;
+			case UP:
+				g.drawImage(ResourceMgr.bulletU,x,y,null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceMgr.bulletR,x,y,null);
+				break;
+			case LEFT:
+				g.drawImage(ResourceMgr.bulletL,x,y,null);
+				break;
+		}
 		move();
 	}
-
 
 
 

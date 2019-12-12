@@ -1,5 +1,7 @@
 package com._520.myTank;
 
+import com._520.util.ResourceMgr;
+
 import java.awt.*;
 import java.util.Random;
 import java.util.UUID;
@@ -8,17 +10,17 @@ public class Tank {
 	// 坦克的速度
 	private static final int SPEED = 20;
 	// 坦克的宽度
-	private static int WIDTH = 50;
+	private static final int tankWidth = ResourceMgr.tankD.getWidth();
 	// 坦克的高度
-	private static int HEIGHT = 50;
+	private static final int tankHeight = ResourceMgr.tankD.getHeight();
 	// 坦克的位置
 	private int x, y;
 	// 坦克的方向
 	private Dir dir;
 	// 判断坦克是否在移动
 	private boolean moving = false;
-
-	private TankFrame tf = null;
+	// 将当前画板传递给坦克
+	private TankFrame tf;
 
 	public Tank(int x, int y, Dir dir, TankFrame tf) {
 		this.x = x;
@@ -55,13 +57,32 @@ public class Tank {
 	public void paint(Graphics g) {
 //		Color c = g.getColor();
 //		g.setColor(Color.YELLOW);
-		g.fillRect(x,y,WIDTH,HEIGHT);
+//		g.fillRect(x,y,WIDTH,HEIGHT);
 //		g.setColor(c);
+		switch (dir){
+			case DOWN:
+				g.drawImage(ResourceMgr.tankD,x,y,null);
+				break;
+			case UP:
+				g.drawImage(ResourceMgr.tankU,x,y,null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceMgr.tankR,x,y,null);
+				break;
+			case LEFT:
+				g.drawImage(ResourceMgr.tankL,x,y,null);
+				break;
+		}
 		move();
 	}
 
+	// 发射子弹
 	public void fire(){
-		tf.bullet = new Bullet(this.x,this.y,this.dir);
+		// 计算子弹的位置
+		int bX = this.x + tankWidth / 2 - Bullet.bulletWidth / 2;
+		int bY = this.y + tankHeight / 2 - Bullet.bulletHeight / 2;
+		// 将子弹加入子弹集合中
+		this.tf.bullets.add(new Bullet(bX,bY+4,this.dir,tf));
 	}
 
 

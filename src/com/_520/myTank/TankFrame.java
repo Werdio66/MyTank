@@ -5,16 +5,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
 	// 创建主坦克
-	private Tank myTank = new Tank(200,300,Dir.DOWN,INSTANCE);
-	// 创建子弹
-	public Bullet bullet = new Bullet(300,300,myTank.getDir());
+	private Tank myTank = new Tank(200,300,Dir.DOWN,this);
+	// 创建子弹集合，用来存放多个子弹
+	List<Bullet> bullets = new ArrayList<>();
+	// 存放敌方坦克
+	List<Tank> tanks = new ArrayList<>();
 	// 窗体大小
-	private static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+	static final int GAME_WIDTH = 1280, GAME_HEIGHT = 960;
 	// 初始化
 	private TankFrame() {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -35,32 +40,46 @@ public class TankFrame extends Frame {
 	public static TankFrame getInstance(){
 		return INSTANCE;
 	}
-//	// 处理闪烁
-//	Image offScreenImage = null;
-//	@Override
-//	public void update(Graphics g) {
-//		if (offScreenImage == null) {
-//			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
-//		}
-//		Graphics gOffScreen = offScreenImage.getGraphics();
-//		Color c = gOffScreen.getColor();
-//		gOffScreen.setColor(Color.BLACK);
-//		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-//		gOffScreen.setColor(c);
-//		paint(gOffScreen);
-//		g.drawImage(offScreenImage, 0, 0, null);
-//	}
+	// 处理闪烁
+	Image offScreenImage = null;
+	@Override
+	public void update(Graphics g) {
+		if (offScreenImage == null) {
+			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		}
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.setColor(Color.BLACK);
+		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		gOffScreen.setColor(c);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage, 0, 0, null);
+	}
 
 	// 画
 	@Override
 	public void paint(Graphics g) {
-//		Color c = g.getColor();
-//		g.setColor(Color.WHITE);
-//		g.setColor(c);
+		Color c = g.getColor();
+		g.setColor(Color.WHITE);
+		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
+		g.setColor(c);
 		// 将画笔交给坦克
 		myTank.paint(g);
-		bullet.paint(g);
+		// 画出所有的子弹，使用foreach会出现并发修改异常
+//		for (Bullet b:bullets
+//			 ) {
+//			b.paint(g);
+//		}
+		// 画出子弹
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).paint(g);
 		}
+
+		for (int i = 0; i < tanks.size(); i++) {
+			tanks.get(i).paint(g);
+		}
+
+	}
 
 	/**
 	 * 	按键监听
@@ -102,30 +121,28 @@ public class TankFrame extends Frame {
 		public void keyReleased(KeyEvent e) {
 			int key = e.getKeyCode();
 			switch (key) {
-			case KeyEvent.VK_LEFT:
-				bL = false;
-				setMainTankDir();
-				break;
-			case KeyEvent.VK_UP:
-				bU = false;
-				setMainTankDir();
-				break;
-			case KeyEvent.VK_RIGHT:
-				bR = false;
-				setMainTankDir();
-				break;
-			case KeyEvent.VK_DOWN:
-				bD = false;
-				setMainTankDir();
-				break;
-			// 处理发射子弹
+				case KeyEvent.VK_LEFT:
+					bL = false;
+					setMainTankDir();
+					break;
+				case KeyEvent.VK_UP:
+					bU = false;
+					setMainTankDir();
+					break;
+				case KeyEvent.VK_RIGHT:
+					bR = false;
+					setMainTankDir();
+					break;
+				case KeyEvent.VK_DOWN:
+					bD = false;
+					setMainTankDir();
+					break;
 				case KeyEvent.VK_CONTROL:
 					// 发射子弹
-				myTank.fire();
-				break;
-
-			default:
-				break;
+					myTank.fire();
+					break;
+				default:
+					break;
 			}
 		}
 
