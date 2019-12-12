@@ -13,7 +13,7 @@ public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
 	// 创建主坦克
-	private Tank myTank = new Tank(600,800,Dir.UP,this);
+	Tank myTank = new Tank(600,800,Dir.UP,Group.GOOD,this);
 	// 创建子弹集合，用来存放多个子弹
 	List<Bullet> bullets = new ArrayList<>();
 	// 存放敌方坦克

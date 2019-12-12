@@ -10,7 +10,8 @@ public class Main {
 		TankFrame tf = TankFrame.getInstance();
 
 		for (int i = 0; i < 5; i++) {
-			tf.tanks.add(new Tank(200 * (i + 1), 300, Dir.DOWN, tf));
+			tf.tanks.add(new Tank(200 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));
+
 		}
 		tf.setVisible(true);
 		while(true) {
