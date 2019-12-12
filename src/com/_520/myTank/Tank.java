@@ -1,18 +1,15 @@
 package com._520.myTank;
 
 import com._520.util.ResourceMgr;
-
 import java.awt.*;
-import java.util.Random;
-import java.util.UUID;
 
 public class Tank {
 	// 坦克的速度
 	private static final int SPEED = 20;
 	// 坦克的宽度
-	private static final int tankWidth = ResourceMgr.tankD.getWidth();
+	public static final int tankWidth = ResourceMgr.tankD.getWidth();
 	// 坦克的高度
-	private static final int tankHeight = ResourceMgr.tankD.getHeight();
+	public static final int tankHeight = ResourceMgr.tankD.getHeight();
 	// 坦克的位置
 	private int x, y;
 	// 坦克的方向
@@ -21,6 +18,7 @@ public class Tank {
 	private boolean moving = false;
 	// 将当前画板传递给坦克
 	private TankFrame tf;
+	private boolean living = true;
 
 	public Tank(int x, int y, Dir dir, TankFrame tf) {
 		this.x = x;
@@ -55,10 +53,9 @@ public class Tank {
 
 	// 将坦克画出来
 	public void paint(Graphics g) {
-//		Color c = g.getColor();
-//		g.setColor(Color.YELLOW);
-//		g.fillRect(x,y,WIDTH,HEIGHT);
-//		g.setColor(c);
+		// 坦克已经死了，就从集合中删除
+		if (!living)
+			tf.tanks.remove(this);
 		switch (dir){
 			case DOWN:
 				g.drawImage(ResourceMgr.tankD,x,y,null);
@@ -109,5 +106,9 @@ public class Tank {
 	}
 	public void setMoving(boolean moving) {
 		this.moving = moving;
+	}
+
+	public void die() {
+		living = false;
 	}
 }

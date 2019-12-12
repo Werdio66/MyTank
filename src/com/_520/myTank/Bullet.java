@@ -3,7 +3,6 @@ package com._520.myTank;
 import com._520.util.ResourceMgr;
 
 import java.awt.*;
-import java.util.UUID;
 
 /**
  * 	子弹类
@@ -19,7 +18,7 @@ public class Bullet {
 	// 子弹的方向
 	private Dir dir;
 	// 子弹是否存活
-	private boolean live = true;
+	private boolean living = true;
 	private TankFrame tf;
 	public Bullet(int x, int y, Dir dir, TankFrame tf) {
 		this.x = x;
@@ -45,13 +44,13 @@ public class Bullet {
 		}
 		// 子弹飞出边界
 		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
-			live = false;
+			living = false;
 	}
 
 	// 将子弹画出来
 	public void paint(Graphics g) {
 		// 删除子弹
-		if (!live && tf.bullets.size() > 0)
+		if (!living && tf.bullets.size() > 0)
 			tf.bullets.remove(this);
 //		Color c = g.getColor();
 //		g.setColor(Color.RED);
@@ -75,10 +74,23 @@ public class Bullet {
 		move();
 	}
 
+	// 碰撞检测
+    public void collideWith(Tank tank) {
+        Rectangle rect1 = new Rectangle(this.x, this.y, bulletWidth, bulletHeight);
+        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.tankWidth, Tank.tankHeight);
+        if(rect1.intersects(rect2)) {
+            tank.die();
+            this.die();
+        }
+
+    }
+
+    private void die() {
+        living = false;
+    }
 
 
-
-	public Dir getDir() {
+    public Dir getDir() {
 		return dir;
 	}
 	public int getX() {

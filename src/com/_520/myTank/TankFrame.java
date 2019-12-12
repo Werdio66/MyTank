@@ -13,7 +13,7 @@ public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
 	// 创建主坦克
-	private Tank myTank = new Tank(200,300,Dir.DOWN,this);
+	private Tank myTank = new Tank(600,800,Dir.UP,this);
 	// 创建子弹集合，用来存放多个子弹
 	List<Bullet> bullets = new ArrayList<>();
 	// 存放敌方坦克
@@ -62,6 +62,7 @@ public class TankFrame extends Frame {
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
+		g.drawString("敌方坦克的数量:" + tanks.size(), 10, 90);
 		g.setColor(c);
 		// 将画笔交给坦克
 		myTank.paint(g);
@@ -74,11 +75,16 @@ public class TankFrame extends Frame {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		}
-
+		// 画出敌方坦克
 		for (int i = 0; i < tanks.size(); i++) {
 			tanks.get(i).paint(g);
 		}
-
+		// 碰撞检测
+		for (int i = 0; i < bullets.size(); i++) {
+			for (int j = 0; j < tanks.size(); j++) {
+				bullets.get(i).collideWith(tanks.get(j));
+			}
+		}
 	}
 
 	/**
