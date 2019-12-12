@@ -26,6 +26,40 @@ public class Bullet {
 		this.tf = tf;
 	}
 
+	public Bullet(int x, int y, Dir dir) {
+		this.x = x;
+		this.y = y;
+		this.dir = dir;
+	}
+
+	private void move() {
+		switch (dir) {
+			case LEFT:
+				x -= SPEED;
+				break;
+			case UP:
+				y -= SPEED;
+				break;
+			case RIGHT:
+				x += SPEED;
+				break;
+			case DOWN:
+				y += SPEED;
+				break;
+		}
+	}
+
+	// 将子弹画出来
+	public void paint(Graphics g) {
+		Color c = g.getColor();
+		g.setColor(Color.YELLOW);
+		g.fillRect(x,y,WIDTH,HEIGHT);
+		g.setColor(c);
+		move();
+	}
+
+
+
 
 
 	public Dir getDir() {
@@ -37,54 +71,12 @@ public class Bullet {
 	public int getY() {
 		return y;
 	}
-	
-
-	private void move() {
-		
-		switch (dir) {
-		case LEFT:
-			x -= SPEED;
-			break;
-		case UP:
-			y -= SPEED;
-			break;
-		case RIGHT:
-			x += SPEED;
-			break;
-		case DOWN:
-			y += SPEED;
-			break;
-		}
-		
-	}
-	public void paint(Graphics g) {
-
-		switch(dir) {
-		case LEFT:
-
-			break;
-		case UP:
-
-			break;
-		case RIGHT:
-
-			break;
-		case DOWN:
-
-			break;
-		}
-		
-		move();
-	}
-	
 	public void setDir(Dir dir) {
 		this.dir = dir;
 	}
-
 	public void setX(int x) {
 		this.x = x;
 	}
-
 	public void setY(int y) {
 		this.y = y;
 	}

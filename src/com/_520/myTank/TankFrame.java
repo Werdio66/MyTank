@@ -5,23 +5,23 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
-import java.util.*;
 
 public class TankFrame extends Frame {
 	// 主窗体
-	public static final TankFrame INSTANCE = new TankFrame();
-	// 方向默认向下
-	private Dir dir = Dir.DOWN;
+	private static final TankFrame INSTANCE = new TankFrame();
 	// 创建主坦克
-	Tank myTank = new Tank(200,300,dir,INSTANCE);
+	private Tank myTank = new Tank(200,300,Dir.DOWN,INSTANCE);
+	// 创建子弹
+	public Bullet bullet = new Bullet(300,300,myTank.getDir());
 	// 窗体大小
-	static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+	private static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+	// 初始化
 	private TankFrame() {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setResizable(false);
 		setTitle("tank war");
 		setVisible(true);
+		// 加入按键接听
 		this.addKeyListener(new MyKeyListener());
 		addWindowListener(new WindowAdapter() {
 
@@ -31,6 +31,9 @@ public class TankFrame extends Frame {
 			}
 
 		});
+	}
+	public static TankFrame getInstance(){
+		return INSTANCE;
 	}
 //	// 处理闪烁
 //	Image offScreenImage = null;
@@ -47,17 +50,23 @@ public class TankFrame extends Frame {
 //		paint(gOffScreen);
 //		g.drawImage(offScreenImage, 0, 0, null);
 //	}
+
+	// 画
 	@Override
 	public void paint(Graphics g) {
 //		Color c = g.getColor();
 //		g.setColor(Color.WHITE);
 //		g.setColor(c);
+		// 将画笔交给坦克
 		myTank.paint(g);
+		bullet.paint(g);
 		}
 
-
+	/**
+	 * 	按键监听
+	 */
 	class MyKeyListener extends KeyAdapter {
-
+		// 判断按下的是哪个键
 		boolean bL = false;
 		boolean bU = false;
 		boolean bR = false;
@@ -66,9 +75,11 @@ public class TankFrame extends Frame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
+			// 哪个键被按下就将对应的属性设置为true
 			switch (key) {
 			case KeyEvent.VK_LEFT:
 				bL = true;
+				//
 				setMainTankDir();
 				break;
 			case KeyEvent.VK_UP:
@@ -108,8 +119,9 @@ public class TankFrame extends Frame {
 				setMainTankDir();
 				break;
 			// 处理发射子弹
-			case KeyEvent.VK_CONTROL:
-
+				case KeyEvent.VK_CONTROL:
+					// 发射子弹
+				myTank.fire();
 				break;
 
 			default:
@@ -117,8 +129,8 @@ public class TankFrame extends Frame {
 			}
 		}
 
+		// 将按键传给坦克，控制移动
 		private void setMainTankDir() {
-
 			if (!bL && !bU && !bR && !bD) {
 				myTank.setMoving(false);
 			} else {

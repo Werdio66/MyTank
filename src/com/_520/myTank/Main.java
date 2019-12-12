@@ -4,7 +4,7 @@ package com._520.myTank;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		TankFrame tf = TankFrame.INSTANCE;
+		TankFrame tf = TankFrame.getInstance();
 		tf.setVisible(true);
 		while(true) {
 			try {
