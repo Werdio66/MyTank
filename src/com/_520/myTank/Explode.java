@@ -1,5 +1,6 @@
 package com._520.myTank;
 
+import com._520.util.Audio;
 import com._520.util.ResourceMgr;
 
 import java.awt.*;
@@ -16,15 +17,17 @@ public class Explode {
 	private int x, y;
 	// 爆炸效果的哪个图片
 	private static int speed = 0;
-	private static TankFrame tf;
+	private TankFrame tf;
 	public Explode(int x, int y, TankFrame tf) {
 		this.x = x;
 		this.y = y;
 		this.tf = tf;
+		// 加入声音
+		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
 
 
-	// 将子弹画出来
+	// 将爆炸画出来
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[speed++],x,y,null);
 		if (speed >= ResourceMgr.explodes.length){

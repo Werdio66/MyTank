@@ -1,5 +1,6 @@
 package com._520.myTank;
 
+import com._520.util.Audio;
 import com._520.util.ResourceMgr;
 import java.awt.*;
 import java.util.Random;
@@ -62,6 +63,10 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
+		// 坦克移动音效
+		if (group == Group.GOOD)
+			new Thread(() -> new Audio("audio/tank_move.wav").play()).start();
+
 		// 让坏坦克可以发射子弹
 		if (group == Group.BAD && random.nextInt(100) > 95){
 			this.fire();
@@ -118,6 +123,9 @@ public class Tank {
 		int bY = this.y + tankHeight / 2 - Bullet.bulletHeight / 2;
 		// 将子弹加入子弹集合中
 		this.tf.bullets.add(new Bullet(bX,bY+4,this.dir,this.group,tf));
+		// 增加子弹发射的声音
+		if (group == Group.GOOD)
+			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
 	}
 
 	public void die() {
