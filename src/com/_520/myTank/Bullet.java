@@ -15,8 +15,10 @@ public class Bullet {
 	public static int bulletHeight = ResourceMgr.bulletD.getHeight();
 	 // 子弹的位置
 	private int x, y;
-	// 子弹的方向
-	private Dir dir;
+    // 子弹的方向
+    private Dir dir;
+    //
+    private Rectangle rect = new Rectangle();
 	// 默认子弹是敌方子弹
 	private Group group;
 	// 子弹是否存活
@@ -28,6 +30,10 @@ public class Bullet {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+        rect.x = this.x;
+        rect.y = this.y;
+		rect.width = bulletWidth;
+		rect.height = bulletHeight;
 	}
 
 	private void move() {
@@ -45,9 +51,13 @@ public class Bullet {
 				y += SPEED;
 				break;
 		}
+        // 更新rect
+        rect.x = this.x;
+        rect.y = this.y;
 		// 子弹飞出边界
 		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
 			living = false;
+
 	}
 
 	// 将子弹画出来
@@ -77,20 +87,17 @@ public class Bullet {
     public void collideWith(Tank tank) {
 		if (group == tank.getGroup())
 			return;
-		// 子弹的矩形框
-		Rectangle bulletRect = new Rectangle(this.x, this.y, bulletWidth, bulletHeight);
-		// 坦克的矩形框
-		Rectangle tankRect = new Rectangle(tank.getX(), tank.getY(), Tank.tankWidth, Tank.tankHeight);
 		// 主坦克
 		Rectangle myTank = new Rectangle(tf.myTank.getX(), tf.myTank.getY(), Tank.tankWidth, Tank.tankHeight);
 
 		// 相交，坦克和子弹都死
-        if(bulletRect.intersects(tankRect)) {
+        if(this.rect.intersects(tank.rect)) {
             tank.die();
             this.die();
 			// 计算爆炸的位置
 			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
 			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
+			// 增加爆炸效果
             tf.explodes.add(new Explode(bX,bY,tf));
         }
     }

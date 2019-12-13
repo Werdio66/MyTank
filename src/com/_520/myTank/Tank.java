@@ -17,6 +17,8 @@ public class Tank {
 	private Dir dir;
 	// 默认坦克是坏的
 	private Group group;
+	//
+	public Rectangle rect = new Rectangle();
 	// 判断坦克是否在移动
 	private boolean moving = false;
 	// 将当前画板传递给坦克
@@ -31,6 +33,10 @@ public class Tank {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = tankWidth;
+		rect.height = tankHeight;
 	}
 
 	/**
@@ -56,21 +62,30 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-		// 坦克出界
-		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
-			living = false;
-
 		// 让坏坦克可以发射子弹
 		if (group == Group.BAD && random.nextInt(100) > 95){
 			this.fire();
+		}
+		if (group == Group.BAD && random.nextInt(100) > 95){
 			// 改变方向
 			chageDir();
 		}
-
+		// 边界处理
+		boundsCheck();
+		// 更新rect
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 
+	private void boundsCheck() {
+		if(this.x < 2) x = 2;
+		if (this.y < 28) y = 28;
+		if (this.x > TankFrame.GAME_WIDTH - Tank.tankWidth - 2) x = TankFrame.GAME_WIDTH - Tank.tankWidth -2;
+		if (this.y > TankFrame.GAME_HEIGHT - Tank.tankHeight - 2) y = TankFrame.GAME_HEIGHT -Tank.tankHeight -2;
+	}
 	// 随机改变方向
 	private void chageDir() {
+		// 随机在枚举类中选择一个方向
 		this.dir = Dir.values()[random.nextInt(4)];
 	}
 
