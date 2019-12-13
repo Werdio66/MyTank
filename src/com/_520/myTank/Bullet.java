@@ -86,17 +86,19 @@ public class Bullet {
 
 		// 相交，坦克和子弹都死
         if(bulletRect.intersects(tankRect)) {
-        	Explode explode = new Explode(x,y);
             tank.die();
             this.die();
+			// 计算爆炸的位置
+			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
+			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
+            tf.explodes.add(new Explode(bX,bY,tf));
         }
     }
+
 
     private void die() {
         living = false;
     }
-
-
     public Dir getDir() {
 		return dir;
 	}

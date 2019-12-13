@@ -18,6 +18,8 @@ public class TankFrame extends Frame {
 	List<Bullet> bullets = new ArrayList<>();
 	// 存放敌方坦克
 	List<Tank> tanks = new ArrayList<>();
+	// 存放每个坦克的爆炸
+	List<Explode> explodes = new ArrayList<>();
 	// 窗体大小
 	static final int GAME_WIDTH = 1280, GAME_HEIGHT = 960;
 	// 初始化
@@ -64,13 +66,14 @@ public class TankFrame extends Frame {
 		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
 		g.drawString("敌方坦克的数量:" + tanks.size(), 10, 90);
 		g.setColor(c);
-		// 将画笔交给坦克
-		myTank.paint(g);
 		// 画出所有的子弹，使用foreach会出现并发修改异常
 //		for (Bullet b:bullets
 //			 ) {
 //			b.paint(g);
 //		}
+
+		// 将画笔交给坦克
+		myTank.paint(g);
 		// 画出子弹
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
@@ -79,12 +82,18 @@ public class TankFrame extends Frame {
 		for (int i = 0; i < tanks.size(); i++) {
 			tanks.get(i).paint(g);
 		}
+
+		for (int i = 0; i < explodes.size(); i++) {
+			explodes.get(i).paint(g);
+		}
 		// 碰撞检测
 		for (int i = 0; i < bullets.size(); i++) {
 			for (int j = 0; j < tanks.size(); j++) {
 				bullets.get(i).collideWith(tanks.get(j));
 			}
 		}
+
+
 	}
 
 	/**

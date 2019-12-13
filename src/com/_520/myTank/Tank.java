@@ -8,9 +8,9 @@ public class Tank {
 	// 坦克的速度
 	private static final int SPEED = 5;
 	// 坦克的宽度
-	public static final int tankWidth = ResourceMgr.tankD.getWidth();
+	public static final int tankWidth = ResourceMgr.goodTankD.getWidth();
 	// 坦克的高度
-	public static final int tankHeight = ResourceMgr.tankD.getHeight();
+	public static final int tankHeight = ResourceMgr.goodTankD.getHeight();
 	// 坦克的位置
 	private int x, y;
 	// 坦克的方向
@@ -61,9 +61,17 @@ public class Tank {
 			living = false;
 
 		// 让坏坦克可以发射子弹
-		if (group == Group.BAD && random.nextInt(100) > 90)
+		if (group == Group.BAD && random.nextInt(100) > 95){
 			this.fire();
+			// 改变方向
+			chageDir();
+		}
 
+	}
+
+	// 随机改变方向
+	private void chageDir() {
+		this.dir = Dir.values()[random.nextInt(4)];
 	}
 
 	// 将坦克画出来
@@ -73,16 +81,16 @@ public class Tank {
 			tf.tanks.remove(this);
 		switch (dir){
 			case DOWN:
-				g.drawImage(ResourceMgr.tankD,x,y,null);
+				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);
 				break;
 			case UP:
-				g.drawImage(ResourceMgr.tankU,x,y,null);
+				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU,x,y,null);
 				break;
 			case RIGHT:
-				g.drawImage(ResourceMgr.tankR,x,y,null);
+				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR,x,y,null);
 				break;
 			case LEFT:
-				g.drawImage(ResourceMgr.tankL,x,y,null);
+				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL,x,y,null);
 				break;
 		}
 		move();
