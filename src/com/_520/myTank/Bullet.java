@@ -1,5 +1,7 @@
 package com._520.myTank;
 
+import com._520.abstractFactory.BaseBullet;
+import com._520.abstractFactory.BaseTank;
 import com._520.util.ResourceMgr;
 
 import java.awt.*;
@@ -7,7 +9,7 @@ import java.awt.*;
 /**
  * 	子弹类
  */
-public class Bullet {
+public class Bullet extends BaseBullet {
 	// 子弹的速度
 	private static final int SPEED = 10;
 	// 子弹的宽度和高度
@@ -63,6 +65,7 @@ public class Bullet {
 	}
 
 	// 将子弹画出来
+	@Override
 	public void paint(Graphics g) {
 		// 删除子弹
 		if (!living && tf.bullets.size() > 0)
@@ -86,7 +89,7 @@ public class Bullet {
 	}
 
 	// 碰撞检测
-    public void collideWith(Tank tank) {
+    public void collideWith(BaseTank tank) {
 		if (group == tank.getGroup())
 			return;
 		// 主坦克
@@ -100,7 +103,7 @@ public class Bullet {
 			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
 			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
 			// 增加爆炸效果
-            tf.explodes.add(new Explode(bX,bY,tf));
+            tf.explodes.add(tf.factory.creatExplode(bX,bY,tf));
         }
     }
 
@@ -108,22 +111,4 @@ public class Bullet {
     private void die() {
         living = false;
     }
-    public Dir getDir() {
-		return dir;
-	}
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 }

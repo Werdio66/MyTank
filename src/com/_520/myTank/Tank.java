@@ -1,5 +1,6 @@
 package com._520.myTank;
 
+import com._520.abstractFactory.BaseTank;
 import com._520.myTank.fireStrategy.DefultFireStrategy;
 import com._520.myTank.fireStrategy.FireStrategy;
 import com._520.myTank.fireStrategy.FourFireStrategy;
@@ -11,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends BaseTank {
 	// 坦克的速度
 	private static int SPEED;
 	// 坦克的宽度
@@ -24,8 +25,6 @@ public class Tank {
 	public Dir dir;
 	// 默认坦克是坏的
 	public Group group;
-	//
-	Rectangle rect = new Rectangle();
 	// 判断坦克是否在移动
 	private boolean moving = false;
 	// 将当前画板传递给坦克
@@ -105,6 +104,7 @@ public class Tank {
 	}
 
 	// 将坦克画出来
+	@Override
 	public void paint(Graphics g) {
 		// 坦克已经死了，就从集合中删除
 		if (!living)

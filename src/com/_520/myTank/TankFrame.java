@@ -1,7 +1,7 @@
 package com._520.myTank;
 
+import com._520.abstractFactory.*;
 import com._520.util.PropertyMgr;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,13 +17,15 @@ public class TankFrame extends Frame {
 	// 创建主坦克
 	Tank myTank = new Tank(600,800,Dir.UP,Group.GOOD,this);
 	// 创建子弹集合，用来存放多个子弹
-	List<Bullet> bullets = new ArrayList<>();
+	List<BaseBullet> bullets = new ArrayList<>();
 	// 存放敌方坦克
-	List<Tank> tanks = new ArrayList<>();
+	List<BaseTank> tanks = new ArrayList<>();
 	// 存放每个坦克的爆炸
-	List<Explode> explodes = new ArrayList<>();
+	List<BaseExplode> explodes = new ArrayList<>();
 	// 窗体大小
 	static int GAME_WIDTH, GAME_HEIGHT;
+	// 增加坦克工厂创建的坦克族
+	public GameFactory factory = FirstFactory.getInstance();
 
 	// 初始化
 	private TankFrame() {

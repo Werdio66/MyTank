@@ -1,5 +1,6 @@
 package com._520.myTank;
 
+import com._520.abstractFactory.BaseExplode;
 import com._520.util.Audio;
 import com._520.util.ResourceMgr;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 /**
  * 	爆炸效果
  */
-public class Explode {
+public class Explode extends BaseExplode {
 
 	// 爆炸效果的宽度和高度
 	public static int explodeWidth = ResourceMgr.explodes[0].getWidth();
@@ -28,6 +29,7 @@ public class Explode {
 
 
 	// 将爆炸画出来
+	@Override
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[speed++],x,y,null);
 		if (speed >= ResourceMgr.explodes.length){

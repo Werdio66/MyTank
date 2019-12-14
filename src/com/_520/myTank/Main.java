@@ -15,7 +15,7 @@ public class Main {
 		int initTanksCount = PropertyMgr.getInt("initTanksCount");
 		// 初始化敌方坦克
 		for (int i = 0; i < initTanksCount; i++) {
-			tf.tanks.add(new Tank(100 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));
+			tf.tanks.add(tf.factory.creatTank(100 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));
 		}
 
 		// 开启游戏背景音乐
