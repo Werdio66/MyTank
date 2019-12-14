@@ -1,5 +1,7 @@
 package com._520.myTank;
 
+import com._520.util.PropertyMgr;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -21,9 +23,16 @@ public class TankFrame extends Frame {
 	// 存放每个坦克的爆炸
 	List<Explode> explodes = new ArrayList<>();
 	// 窗体大小
-	static final int GAME_WIDTH = 1280, GAME_HEIGHT = 960;
+	static int GAME_WIDTH, GAME_HEIGHT;
+
 	// 初始化
 	private TankFrame() {
+		// 从配置文件中获取界面大小
+		int gameWidth = PropertyMgr.getInt("gameWidth");
+		int gameHeight = PropertyMgr.getInt("gameHeight");
+		System.out.println(gameWidth + "   " + gameHeight);
+		GAME_WIDTH = gameWidth;
+		GAME_HEIGHT = gameHeight;
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setResizable(false);
 		setTitle("tank war");
@@ -43,7 +52,7 @@ public class TankFrame extends Frame {
 		return INSTANCE;
 	}
 	// 处理闪烁
-	Image offScreenImage = null;
+	private Image offScreenImage = null;
 	@Override
 	public void update(Graphics g) {
 		if (offScreenImage == null) {

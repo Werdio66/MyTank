@@ -4,3 +4,6 @@ initTanksCount=10
 speed=10
 #坦克的子弹策略
 fireMsd=com._520.myTank.fireStrategy.FourFireStrategy
+#游戏界面的宽度和高度
+gameWidth=1280
+gameHeight=960
