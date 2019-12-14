@@ -8,11 +8,11 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		// 加载图片
-		new ResourceMgr();
+//		new ResourceMgr();
 		// 画板
 		TankFrame tf = TankFrame.getInstance();
 
-		int initTanksCount = Integer.valueOf((String) PropertyMgr.get("initTanksCount"));
+		int initTanksCount = PropertyMgr.getInt("initTanksCount");
 		// 初始化敌方坦克
 		for (int i = 0; i < initTanksCount; i++) {
 			tf.tanks.add(new Tank(100 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));

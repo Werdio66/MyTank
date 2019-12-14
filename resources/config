@@ -1,2 +1,6 @@
 #坦克的数量
 initTanksCount=10
+#坦克的速度
+speed=10
+#坦克的子弹策略
+fireMsd=com._520.myTank.fireStrategy.FourFireStrategy

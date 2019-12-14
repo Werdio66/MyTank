@@ -8,6 +8,13 @@ import java.io.IOException;
  *  加载图片资源
  */
 public class ResourceMgr {
+    private ResourceMgr(){}
+
+    private static ResourceMgr INSTENCE = new ResourceMgr();
+
+    public static ResourceMgr getInstance(){
+        return INSTENCE;
+    }
     // 坦克
     public static BufferedImage goodTankL, goodTankU, goodTankR, goodTankD;
     public static BufferedImage badTankL, badTankU, badTankR, badTankD;

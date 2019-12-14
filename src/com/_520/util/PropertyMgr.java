@@ -8,6 +8,7 @@ import java.util.Properties;
  */
 public class PropertyMgr {
 
+    private PropertyMgr(){}
     private static Properties properties = new Properties();
 
     static {
@@ -24,5 +25,12 @@ public class PropertyMgr {
      */
     public static Object get(String key){
         return properties == null ? null : properties.get(key);
+    }
+    public static int getInt(String key){
+        return properties == null ? 0 : Integer.valueOf((String)properties.get(key));
+    }
+
+    public static String getString(String key){
+        return properties == null ? "" : (String)properties.get(key);
     }
 }

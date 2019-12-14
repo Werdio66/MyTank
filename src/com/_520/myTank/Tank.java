@@ -1,15 +1,19 @@
 package com._520.myTank;
 
 import com._520.myTank.fireStrategy.DefultFireStrategy;
+import com._520.myTank.fireStrategy.FireStrategy;
 import com._520.myTank.fireStrategy.FourFireStrategy;
 import com._520.util.Audio;
+import com._520.util.PropertyMgr;
 import com._520.util.ResourceMgr;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 public class Tank {
 	// 坦克的速度
-	private static final int SPEED = 5;
+	private static int SPEED;
 	// 坦克的宽度
 	public static final int tankWidth = ResourceMgr.goodTankD.getWidth();
 	// 坦克的高度
@@ -42,6 +46,10 @@ public class Tank {
 		rect.height = tankHeight;
 	}
 
+	static {
+		// 从配置文件中获取速度
+		SPEED = PropertyMgr.getInt("speed");
+	}
 	/**
 	 * 	坦克的移动
 	 */
@@ -120,17 +128,31 @@ public class Tank {
 
 	// 发射子弹
 	public void fire(){
-		if (this.group == Group.GOOD)
-			FourFireStrategy.getInstence().fire(this);
+		if (this.group == Group.GOOD){
+			// 从配置文件中读取策略
+			String msgName = PropertyMgr.getString("fireMsd");
+			FireStrategy fireStrategy = null;
+			try {
+				// 得到指定类的方法
+				Method method = Class.forName(msgName).getMethod("getInstence");
+				// 调用方法得到对象
+				fireStrategy = (FireStrategy) method.invoke(method);
+			} catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			// 如果配置文件中没有就使用默认的策略
+			if (fireStrategy != null)
+				fireStrategy.fire(this);
+			else
+				DefultFireStrategy.getInstance().fire(this);
+		}
 		else
 			DefultFireStrategy.getInstance().fire(this);
 	}
 
+
 	public void die() {
 		living = false;
-	}
-	public Dir getDir() {
-		return dir;
 	}
 	public int getX() {
 		return x;
@@ -141,24 +163,10 @@ public class Tank {
 	public void setDir(Dir dir) {
 		this.dir = dir;
 	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	public boolean isMoving() {
-		return moving;
-	}
 	public void setMoving(boolean moving) {
 		this.moving = moving;
 	}
 	public Group getGroup() {
 		return group;
 	}
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-
 }
