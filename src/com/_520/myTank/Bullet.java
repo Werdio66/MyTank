@@ -34,6 +34,8 @@ public class Bullet {
         rect.y = this.y;
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
+		// 每次new出来对象就加到集合中
+		tf.bullets.add(this);
 	}
 
 	private void move() {

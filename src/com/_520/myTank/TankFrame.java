@@ -65,6 +65,7 @@ public class TankFrame extends Frame {
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
 		g.drawString("敌方坦克的数量:" + tanks.size(), 10, 90);
+		g.drawString("爆炸的数量:" + explodes.size(), 10, 110);
 		g.setColor(c);
 		// 画出所有的子弹，使用foreach会出现并发修改异常
 //		for (Bullet b:bullets

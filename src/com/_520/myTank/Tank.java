@@ -1,5 +1,7 @@
 package com._520.myTank;
 
+import com._520.myTank.fireStrategy.DefultFireStrategy;
+import com._520.myTank.fireStrategy.FourFireStrategy;
 import com._520.util.Audio;
 import com._520.util.ResourceMgr;
 import java.awt.*;
@@ -15,15 +17,15 @@ public class Tank {
 	// 坦克的位置
 	private int x, y;
 	// 坦克的方向
-	private Dir dir;
+	public Dir dir;
 	// 默认坦克是坏的
-	private Group group;
+	public Group group;
 	//
-	public Rectangle rect = new Rectangle();
+	Rectangle rect = new Rectangle();
 	// 判断坦克是否在移动
 	private boolean moving = false;
 	// 将当前画板传递给坦克
-	private TankFrame tf;
+	public TankFrame tf;
 	// 坦克是否存活
 	private boolean living = true;
 	private Random random = new Random();
@@ -118,14 +120,10 @@ public class Tank {
 
 	// 发射子弹
 	public void fire(){
-		// 计算子弹的位置
-		int bX = this.x + tankWidth / 2 - Bullet.bulletWidth / 2;
-		int bY = this.y + tankHeight / 2 - Bullet.bulletHeight / 2;
-		// 将子弹加入子弹集合中
-		this.tf.bullets.add(new Bullet(bX,bY+4,this.dir,this.group,tf));
-		// 增加子弹发射的声音
-		if (group == Group.GOOD)
-			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+		if (this.group == Group.GOOD)
+			FourFireStrategy.getInstence().fire(this);
+		else
+			DefultFireStrategy.getInstance().fire(this);
 	}
 
 	public void die() {
