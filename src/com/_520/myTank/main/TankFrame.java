@@ -1,6 +1,9 @@
-package com._520.myTank;
+package com._520.myTank.main;
 
-import com._520.abstractFactory.*;
+import com._520.myTank.abstractFactory.*;
+import com._520.myTank.enums.Dir;
+import com._520.myTank.enums.Group;
+import com._520.myTank.tanks.Tank;
 import com._520.util.PropertyMgr;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -15,17 +18,17 @@ public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
 	// 创建主坦克
-	Tank myTank = new Tank(600,800,Dir.UP,Group.GOOD,this);
+	public Tank myTank = new Tank(600,800, Dir.UP, Group.GOOD,this);
 	// 创建子弹集合，用来存放多个子弹
-	List<BaseBullet> bullets = new ArrayList<>();
+	public List<BaseBullet> bullets = new ArrayList<>();
 	// 存放敌方坦克
-	List<BaseTank> tanks = new ArrayList<>();
+	public List<BaseTank> tanks = new ArrayList<>();
 	// 存放每个坦克的爆炸
-	List<BaseExplode> explodes = new ArrayList<>();
+	public List<BaseExplode> explodes = new ArrayList<>();
 	// 窗体大小
-	static int GAME_WIDTH, GAME_HEIGHT;
+	public static int GAME_WIDTH, GAME_HEIGHT;
 	// 增加坦克工厂创建的坦克族
-	public GameFactory factory = FirstFactory.getInstance();
+	public GameFactory factory = new SecondFactory();
 
 	// 初始化
 	private TankFrame() {

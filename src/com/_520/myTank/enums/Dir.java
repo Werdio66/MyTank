@@ -1,4 +1,4 @@
-package com._520.myTank;
+package com._520.myTank.enums;
 
 /**
  * 	定义方向

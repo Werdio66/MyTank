@@ -1,6 +1,11 @@
-package com._520.abstractFactory;
+package com._520.myTank.abstractFactory;
 
-import com._520.myTank.*;
+import com._520.myTank.bullets.Bullet;
+import com._520.myTank.enums.Dir;
+import com._520.myTank.enums.Group;
+import com._520.myTank.explodes.Explode;
+import com._520.myTank.main.TankFrame;
+import com._520.myTank.tanks.Tank;
 
 public class FirstFactory extends GameFactory {
     private FirstFactory(){}

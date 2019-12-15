@@ -1,8 +1,9 @@
-package com._520.myTank;
+package com._520.myTank.main;
 
+import com._520.myTank.enums.Dir;
+import com._520.myTank.enums.Group;
 import com._520.util.Audio;
 import com._520.util.PropertyMgr;
-import com._520.util.ResourceMgr;
 
 public class Main {
 
@@ -15,7 +16,7 @@ public class Main {
 		int initTanksCount = PropertyMgr.getInt("initTanksCount");
 		// 初始化敌方坦克
 		for (int i = 0; i < initTanksCount; i++) {
-			tf.tanks.add(tf.factory.creatTank(100 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));
+			tf.tanks.add(tf.factory.creatTank(100 * (i + 1), 300, Dir.DOWN, Group.BAD, tf));
 		}
 
 		// 开启游戏背景音乐

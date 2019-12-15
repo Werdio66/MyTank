@@ -1,8 +1,8 @@
-package com._520.abstractFactory;
+package com._520.myTank.abstractFactory;
 
-import com._520.myTank.Dir;
-import com._520.myTank.Group;
-import com._520.myTank.TankFrame;
+import com._520.myTank.enums.Dir;
+import com._520.myTank.enums.Group;
+import com._520.myTank.main.TankFrame;
 
 /**
  *  使用抽象工厂创建坦克一族
