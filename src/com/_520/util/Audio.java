@@ -77,7 +77,7 @@ public class Audio {
 
 	
 
-	public void close() {
+	private void close() {
 		try {
 			audioInputStream.close();
 		} catch (IOException e) {
@@ -85,11 +85,5 @@ public class Audio {
 		}
 	}
 
-	public static void main(String[] args) {
-		// Audio a = new Audio("audio/explode.wav");
-		Audio a = new Audio("audio/war1.wav");
-		a.loop();
-
-	}
 
 }
