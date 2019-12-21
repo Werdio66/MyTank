@@ -1,4 +1,4 @@
-package com._520.myTank.collider;
+package com._520.myTank.cor;
 
 import com._520.myTank.GameObject;
 
@@ -10,5 +10,5 @@ public interface Collider {
     /**
      *  碰撞检测
      */
-    void collide(GameObject o1, GameObject o2);
+    boolean collide(GameObject o1, GameObject o2);
 }

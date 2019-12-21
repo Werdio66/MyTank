@@ -18,12 +18,12 @@ public class Bullet extends GameObject {
     // 子弹的方向
     private Dir dir;
     //
-    private Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 	// 默认子弹是敌方子弹
-	private Group group;
+	public Group group;
 	// 子弹是否存活
 	private boolean living = true;
-	private GameModel gm;
+	public GameModel gm;
 	public Bullet(int x, int y, Dir dir,Group group, GameModel gm) {
 		this.x = x;
 		this.y = y;
@@ -85,27 +85,8 @@ public class Bullet extends GameObject {
 		move();
 	}
 
-	// 碰撞检测
-    public void collideWith(Tank tank) {
-		if (group == tank.getGroup())
-			return;
-		// 主坦克
-		Rectangle myTank = new Rectangle(gm.myTank.getX(), gm.myTank.getY(), Tank.tankWidth, Tank.tankHeight);
 
-		// 相交，坦克和子弹都死
-        if(this.rect.intersects(tank.rect)) {
-            tank.die();
-            this.die();
-			// 计算爆炸的位置
-			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
-			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
-			// 增加爆炸效果
-            gm.gameObjects.add(new Explode(bX,bY,gm));
-        }
-    }
-
-
-    private void die() {
+    public void die() {
         living = false;
     }
     public Dir getDir() {

@@ -1,8 +1,9 @@
 package com._520.myTank;
 
-import com._520.myTank.collider.BulletTankCollider;
-import com._520.myTank.collider.Collider;
-import com._520.myTank.collider.TankTankCollider;
+import com._520.myTank.cor.BulletTankCollider;
+import com._520.myTank.cor.Collider;
+import com._520.myTank.cor.ColliderChain;
+import com._520.myTank.cor.TankTankCollider;
 import com._520.util.PropertyMgr;
 
 import java.awt.*;
@@ -16,19 +17,10 @@ public class GameModel extends Frame {
 
     // 创建主坦克
     Tank myTank = new Tank(600,800,Dir.UP,Group.GOOD,this);
-//    // 创建子弹集合，用来存放多个子弹
-//    java.util.List<Bullet> bullets = new ArrayList<>();
-//    // 存放敌方坦克
-//    java.util.List<Tank> tanks = new ArrayList<>();
-//    // 存放每个坦克的爆炸
-//    List<Explode> explodes = new ArrayList<>();
     // 存放所有的物体
-    List<GameObject> gameObjects = new ArrayList<>();
-
-    // 子弹和坦克的碰撞
-    private Collider collider = new BulletTankCollider();
-    // 坦克和坦克的碰撞
-    private Collider collider1 = new TankTankCollider();
+    public List<GameObject> gameObjects = new ArrayList<>();
+    // 处理碰撞的链条
+    private Collider chain = new ColliderChain();
 
     public GameModel(){
         int initTanksCount = PropertyMgr.getInt("initTanksCount");
@@ -82,8 +74,7 @@ public class GameModel extends Frame {
                 GameObject o1 = gameObjects.get(i);
                 GameObject o2 = gameObjects.get(j);
                 // 碰撞器
-                collider.collide(o1,o2);
-                collider1.collide(o1,o2);
+                chain.collide(o1,o2);
             }
         }
 
