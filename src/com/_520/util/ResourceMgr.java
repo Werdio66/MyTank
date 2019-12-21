@@ -22,6 +22,8 @@ public class ResourceMgr {
     public static BufferedImage bulletL, bulletD, bulletU, bulletR;
     // 爆炸效果
     public static BufferedImage[] explodes = new BufferedImage[16];
+    // 墙
+    public static BufferedImage square;
 
     static {
         try {
@@ -39,10 +41,15 @@ public class ResourceMgr {
             bulletL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
             bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
             bulletR = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
+
+            square = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/square0.jpg"));
+
             for (int i = 0; i < 16; i++) {
                 explodes[i] = ImageIO.read(ResourceMgr.class.getClassLoader()
                         .getResourceAsStream("images/e" + (i + 1) + ".gif"));
             }
+
+            //
         } catch (IOException e) {
             e.printStackTrace();
         }
