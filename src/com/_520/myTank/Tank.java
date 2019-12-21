@@ -24,8 +24,8 @@ public class Tank extends GameObject {
 	public Dir dir;
 	// 默认坦克是坏的
 	public Group group;
-	//
-	Rectangle rect = new Rectangle();
+	// 坦克的矩形框
+	public Rectangle rect = new Rectangle();
 	// 判断坦克是否在移动
 	private boolean moving = false;
 	// 将当前画板传递给坦克

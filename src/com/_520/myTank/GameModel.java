@@ -2,6 +2,7 @@ package com._520.myTank;
 
 import com._520.myTank.collider.BulletTankCollider;
 import com._520.myTank.collider.Collider;
+import com._520.myTank.collider.TankTankCollider;
 import com._520.util.PropertyMgr;
 
 import java.awt.*;
@@ -24,8 +25,10 @@ public class GameModel extends Frame {
     // 存放所有的物体
     List<GameObject> gameObjects = new ArrayList<>();
 
+    // 子弹和坦克的碰撞
     private Collider collider = new BulletTankCollider();
-
+    // 坦克和坦克的碰撞
+    private Collider collider1 = new TankTankCollider();
 
     public GameModel(){
         int initTanksCount = PropertyMgr.getInt("initTanksCount");
@@ -80,6 +83,7 @@ public class GameModel extends Frame {
                 GameObject o2 = gameObjects.get(j);
                 // 碰撞器
                 collider.collide(o1,o2);
+                collider1.collide(o1,o2);
             }
         }
 
