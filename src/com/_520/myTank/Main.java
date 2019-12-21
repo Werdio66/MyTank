@@ -12,18 +12,12 @@ public class Main {
 		// 画板
 		TankFrame tf = TankFrame.getInstance();
 
-		int initTanksCount = PropertyMgr.getInt("initTanksCount");
-		// 初始化敌方坦克
-		for (int i = 0; i < initTanksCount; i++) {
-			tf.tanks.add(new Tank(100 * (i + 1), 300, Dir.DOWN,Group.BAD, tf));
-		}
+
 
 		// 开启游戏背景音乐
 		new Thread(() -> new Audio("audio/war1.wav").loop()).start();
 		tf.setVisible(true);
 		while(true) {
-
-
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {

@@ -23,19 +23,19 @@ public class Bullet {
 	private Group group;
 	// 子弹是否存活
 	private boolean living = true;
-	private TankFrame tf;
-	public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
+	private GameModel gm;
+	public Bullet(int x, int y, Dir dir,Group group, GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.tf = tf;
+		this.gm = gm;
         rect.x = this.x;
         rect.y = this.y;
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
 		// 每次new出来对象就加到集合中
-		tf.bullets.add(this);
+		gm.bullets.add(this);
 	}
 
 	private void move() {
@@ -65,8 +65,8 @@ public class Bullet {
 	// 将子弹画出来
 	public void paint(Graphics g) {
 		// 删除子弹
-		if (!living && tf.bullets.size() > 0)
-			tf.bullets.remove(this);
+		if (!living && gm.bullets.size() > 0)
+			gm.bullets.remove(this);
 
 		switch (dir){
 			case DOWN:
@@ -90,7 +90,7 @@ public class Bullet {
 		if (group == tank.getGroup())
 			return;
 		// 主坦克
-		Rectangle myTank = new Rectangle(tf.myTank.getX(), tf.myTank.getY(), Tank.tankWidth, Tank.tankHeight);
+		Rectangle myTank = new Rectangle(gm.myTank.getX(), gm.myTank.getY(), Tank.tankWidth, Tank.tankHeight);
 
 		// 相交，坦克和子弹都死
         if(this.rect.intersects(tank.rect)) {
@@ -100,7 +100,7 @@ public class Bullet {
 			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
 			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
 			// 增加爆炸效果
-            tf.explodes.add(new Explode(bX,bY,tf));
+            gm.explodes.add(new Explode(bX,bY,gm));
         }
     }
 

@@ -14,17 +14,10 @@ import java.util.List;
 public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
-	// 创建主坦克
-	Tank myTank = new Tank(600,800,Dir.UP,Group.GOOD,this);
-	// 创建子弹集合，用来存放多个子弹
-	List<Bullet> bullets = new ArrayList<>();
-	// 存放敌方坦克
-	List<Tank> tanks = new ArrayList<>();
-	// 存放每个坦克的爆炸
-	List<Explode> explodes = new ArrayList<>();
+
+	private GameModel gameModel = new GameModel();
 	// 窗体大小
 	static int GAME_WIDTH, GAME_HEIGHT;
-
 	// 初始化
 	private TankFrame() {
 		// 从配置文件中获取界面大小
@@ -70,39 +63,7 @@ public class TankFrame extends Frame {
 	// 画
 	@Override
 	public void paint(Graphics g) {
-		Color c = g.getColor();
-		g.setColor(Color.WHITE);
-		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
-		g.drawString("敌方坦克的数量:" + tanks.size(), 10, 90);
-		g.drawString("爆炸的数量:" + explodes.size(), 10, 110);
-		g.setColor(c);
-		// 画出所有的子弹，使用foreach会出现并发修改异常
-//		for (Bullet b:bullets
-//			 ) {
-//			b.paint(g);
-//		}
-
-		// 将画笔交给坦克
-		myTank.paint(g);
-		// 画出子弹
-		for (int i = 0; i < bullets.size(); i++) {
-			bullets.get(i).paint(g);
-		}
-		// 画出敌方坦克
-		for (int i = 0; i < tanks.size(); i++) {
-			tanks.get(i).paint(g);
-		}
-
-		for (int i = 0; i < explodes.size(); i++) {
-			explodes.get(i).paint(g);
-		}
-		// 碰撞检测
-		for (int i = 0; i < bullets.size(); i++) {
-			for (int j = 0; j < tanks.size(); j++) {
-				bullets.get(i).collideWith(tanks.get(j));
-			}
-		}
-
+		gameModel.paint(g);
 
 	}
 
@@ -164,7 +125,7 @@ public class TankFrame extends Frame {
 					break;
 				case KeyEvent.VK_CONTROL:
 					// 发射子弹
-					myTank.fire();
+					gameModel.getMainTank().fire();
 					break;
 				default:
 					break;
@@ -173,6 +134,8 @@ public class TankFrame extends Frame {
 
 		// 将按键传给坦克，控制移动
 		private void setMainTankDir() {
+			// 从model中获取坦克
+			Tank myTank = gameModel.getMainTank();
 			if (!bL && !bU && !bR && !bD) {
 				myTank.setMoving(false);
 			} else {

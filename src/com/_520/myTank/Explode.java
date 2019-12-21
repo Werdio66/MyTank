@@ -17,11 +17,11 @@ public class Explode {
 	private int x, y;
 	// 爆炸效果的哪个图片
 	private static int speed = 0;
-	private TankFrame tf;
-	public Explode(int x, int y, TankFrame tf) {
+	private GameModel gm;
+	public Explode(int x, int y, GameModel gm) {
 		this.x = x;
 		this.y = y;
-		this.tf = tf;
+		this.gm = gm;
 		// 加入声音
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
@@ -31,7 +31,7 @@ public class Explode {
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[speed++],x,y,null);
 		if (speed >= ResourceMgr.explodes.length){
-			tf.explodes.remove(this);
+			gm.explodes.remove(this);
 			speed = 0;
 		}
 

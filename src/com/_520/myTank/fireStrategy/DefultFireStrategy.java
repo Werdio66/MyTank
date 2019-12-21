@@ -21,7 +21,7 @@ public class DefultFireStrategy implements FireStrategy {
         int bX = tank.getX() + Tank.tankWidth / 2 - Bullet.bulletWidth / 2;
         int bY = tank.getY() + Tank.tankHeight / 2 - Bullet.bulletHeight / 2;
         // 将子弹加入子弹集合中
-        new Bullet(bX,bY+4,tank.dir,tank.group,tank.tf);
+        new Bullet(bX,bY+4,tank.dir,tank.group,tank.gameModel);
         // 增加子弹发射的声音
         if (tank.group == Group.GOOD)
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();

@@ -27,7 +27,7 @@ public class FourFireStrategy implements FireStrategy {
         for (Dir dir:dirs
              ) {
             // 将子弹加入子弹集合中
-            new Bullet(bX,bY+4,dir,tank.group,tank.tf);
+            new Bullet(bX,bY+4,dir,tank.group,tank.gameModel);
         }
         // 增加子弹发射的声音
         if (tank.group == Group.GOOD)

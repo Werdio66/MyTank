@@ -29,17 +29,17 @@ public class Tank {
 	// 判断坦克是否在移动
 	private boolean moving = false;
 	// 将当前画板传递给坦克
-	public TankFrame tf;
+	public GameModel gameModel;
 	// 坦克是否存活
 	private boolean living = true;
 	private Random random = new Random();
 
-	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+	public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.tf = tf;
+		this.gameModel = gameModel;
 		rect.x = this.x;
 		rect.y = this.y;
 		rect.width = tankWidth;
@@ -108,7 +108,7 @@ public class Tank {
 	public void paint(Graphics g) {
 		// 坦克已经死了，就从集合中删除
 		if (!living)
-			tf.tanks.remove(this);
+			gameModel.tanks.remove(this);
 		switch (dir){
 			case DOWN:
 				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);
