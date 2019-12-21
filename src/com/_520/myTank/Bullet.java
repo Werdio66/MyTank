@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * 	子弹类
  */
-public class Bullet {
+public class Bullet extends GameObject {
 	// 子弹的速度
 	private static final int SPEED = 10;
 	// 子弹的宽度和高度
@@ -35,7 +35,7 @@ public class Bullet {
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
 		// 每次new出来对象就加到集合中
-		gm.bullets.add(this);
+		gm.gameObjects.add(this);
 	}
 
 	private void move() {
@@ -65,8 +65,8 @@ public class Bullet {
 	// 将子弹画出来
 	public void paint(Graphics g) {
 		// 删除子弹
-		if (!living && gm.bullets.size() > 0)
-			gm.bullets.remove(this);
+		if (!living && gm.gameObjects.size() > 0)
+			gm.gameObjects.remove(this);
 
 		switch (dir){
 			case DOWN:
@@ -100,7 +100,7 @@ public class Bullet {
 			int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
 			int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
 			// 增加爆炸效果
-            gm.explodes.add(new Explode(bX,bY,gm));
+            gm.gameObjects.add(new Explode(bX,bY,gm));
         }
     }
 

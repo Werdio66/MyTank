@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject {
 	// 坦克的速度
 	private static int SPEED;
 	// 坦克的宽度
@@ -108,7 +108,7 @@ public class Tank {
 	public void paint(Graphics g) {
 		// 坦克已经死了，就从集合中删除
 		if (!living)
-			gameModel.tanks.remove(this);
+			gameModel.gameObjects.remove(this);
 		switch (dir){
 			case DOWN:
 				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);

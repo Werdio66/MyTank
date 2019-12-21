@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * 	爆炸效果
  */
-public class Explode {
+public class Explode extends GameObject {
 
 	// 爆炸效果的宽度和高度
 	public static int explodeWidth = ResourceMgr.explodes[0].getWidth();
@@ -31,7 +31,7 @@ public class Explode {
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[speed++],x,y,null);
 		if (speed >= ResourceMgr.explodes.length){
-			gm.explodes.remove(this);
+			gm.gameObjects.remove(this);
 			speed = 0;
 		}
 
