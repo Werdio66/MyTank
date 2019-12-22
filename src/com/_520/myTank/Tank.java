@@ -28,18 +28,16 @@ public class Tank extends GameObject {
 	public Rectangle rect = new Rectangle();
 	// 判断坦克是否在移动
 	private boolean moving = false;
-	// 将当前画板传递给坦克
-	public GameModel gameModel;
 	// 坦克是否存活
 	private boolean living = true;
 	private Random random = new Random();
+	private int oldX, oldY;
 
-	public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
+	public Tank(int x, int y, Dir dir, Group group) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gameModel = gameModel;
 		rect.x = this.x;
 		rect.y = this.y;
 		rect.width = tankWidth;
@@ -54,6 +52,8 @@ public class Tank extends GameObject {
 	 * 	坦克的移动
 	 */
 	private void move() {
+		oldX = x;
+		oldY = y;
 		// 没有按键就返回
 		if (!moving && group == Group.GOOD)
 			return;
@@ -108,7 +108,7 @@ public class Tank extends GameObject {
 	public void paint(Graphics g) {
 		// 坦克已经死了，就从集合中删除
 		if (!living)
-			gameModel.gameObjects.remove(this);
+			GameModel.getInstence().gameObjects.remove(this);
 		switch (dir){
 			case DOWN:
 				g.drawImage(group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);
@@ -150,7 +150,10 @@ public class Tank extends GameObject {
 			DefultFireStrategy.getInstance().fire(this);
 	}
 
-
+	public void back(){
+		x = oldX;
+		y = oldY;
+	}
 	public void die() {
 		living = false;
 	}

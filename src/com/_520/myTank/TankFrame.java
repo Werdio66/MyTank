@@ -15,7 +15,7 @@ public class TankFrame extends Frame {
 	// 主窗体
 	private static final TankFrame INSTANCE = new TankFrame();
 
-	private GameModel gameModel = new GameModel();
+	private GameModel gameModel = GameModel.getInstence();
 	// 窗体大小
 	static int GAME_WIDTH, GAME_HEIGHT;
 	// 初始化

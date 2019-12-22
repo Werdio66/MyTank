@@ -17,11 +17,9 @@ public class Explode extends GameObject {
 	private int x, y;
 	// 爆炸效果的哪个图片
 	private static int speed = 0;
-	private GameModel gm;
-	public Explode(int x, int y, GameModel gm) {
+	public Explode(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.gm = gm;
 		// 加入声音
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
@@ -31,25 +29,11 @@ public class Explode extends GameObject {
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[speed++],x,y,null);
 		if (speed >= ResourceMgr.explodes.length){
-			gm.gameObjects.remove(this);
+			GameModel.getInstence().remove(this);
 			speed = 0;
 		}
 
 
 	}
 
-
-
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 }

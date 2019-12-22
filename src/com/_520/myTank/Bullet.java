@@ -23,19 +23,17 @@ public class Bullet extends GameObject {
 	public Group group;
 	// 子弹是否存活
 	private boolean living = true;
-	public GameModel gm;
-	public Bullet(int x, int y, Dir dir,Group group, GameModel gm) {
+	public Bullet(int x, int y, Dir dir,Group group) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gm = gm;
         rect.x = this.x;
         rect.y = this.y;
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
 		// 每次new出来对象就加到集合中
-		gm.gameObjects.add(this);
+		GameModel.getInstence().add(this);
 	}
 
 	private void move() {
@@ -65,8 +63,8 @@ public class Bullet extends GameObject {
 	// 将子弹画出来
 	public void paint(Graphics g) {
 		// 删除子弹
-		if (!living && gm.gameObjects.size() > 0)
-			gm.gameObjects.remove(this);
+		if (!living)
+			GameModel.getInstence().remove(this);
 
 		switch (dir){
 			case DOWN:
@@ -89,22 +87,5 @@ public class Bullet extends GameObject {
     public void die() {
         living = false;
     }
-    public Dir getDir() {
-		return dir;
-	}
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
+
 }

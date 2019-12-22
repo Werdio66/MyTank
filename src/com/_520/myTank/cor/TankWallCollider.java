@@ -2,28 +2,29 @@ package com._520.myTank.cor;
 
 import com._520.myTank.Dir;
 import com._520.myTank.GameObject;
-import com._520.myTank.Square;
+import com._520.myTank.Wall;
 import com._520.myTank.Tank;
 
 import java.util.Random;
 
-public class TankSquareCollider implements Collider {
+public class TankWallCollider implements Collider {
     private Random random = new Random();
     @Override
     public boolean collide(GameObject o1, GameObject o2) {
-        if (o1 instanceof Tank && o2 instanceof Square){
+        if (o1 instanceof Tank && o2 instanceof Wall){
             Tank t = (Tank) o1;
-            Square s = (Square) o2;
+            Wall s = (Wall) o2;
             // 碰撞检测
             if (t.rect.intersects(s.rect)){
-                Dir dir = t.dir;
-                t.setDir(changeDir(dir));
+//                Dir dir = t.dir;
+//                t.setDir(changeDir(dir));
+                t.back();
                 return true;
             }
-        }else if (o2 instanceof Tank && o1 instanceof Square){
+        }else if (o2 instanceof Tank && o1 instanceof Wall){
             return collide(o2,o1);
         }
-        return false;
+        return true;
     }
     /**
      *  改变方向

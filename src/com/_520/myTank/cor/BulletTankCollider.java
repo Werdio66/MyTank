@@ -1,9 +1,6 @@
 package com._520.myTank.cor;
 
-import com._520.myTank.Bullet;
-import com._520.myTank.Explode;
-import com._520.myTank.GameObject;
-import com._520.myTank.Tank;
+import com._520.myTank.*;
 
 import java.awt.*;
 
@@ -29,7 +26,7 @@ public class BulletTankCollider implements Collider {
     // 碰撞检测
     private boolean collideWith(Tank tank, Bullet bullet) {
         if (bullet.group == tank.getGroup())
-            return false;
+            return true;
 
         // 相交，坦克和子弹都死
         if(bullet.rect.intersects(tank.rect)) {
@@ -39,9 +36,9 @@ public class BulletTankCollider implements Collider {
             int bX = tank.getX() + Tank.tankWidth / 2 - Explode.explodeWidth / 2;
             int bY = tank.getY() + Tank.tankHeight / 2 - Explode.explodeHeight / 2;
             // 增加爆炸效果
-            bullet.gm.gameObjects.add(new Explode(bX,bY,bullet.gm));
-            return true;
+            GameModel.getInstence().add(new Explode(bX,bY));
+            return false;
         }
-        return false;
+        return true;
     }
 }

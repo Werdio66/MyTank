@@ -16,10 +16,12 @@ public class TankTankCollider implements Collider {
             Tank t2 = (Tank) o2;
             // 碰撞检测
             if (t1.rect.intersects(t2.rect)){
-                Dir dir1 = t1.dir;
-                Dir dir2 = t2.dir;
-                t1.setDir(changeDir(dir1));
-                t2.setDir(changeDir(dir2));
+//                Dir dir1 = t1.dir;
+//                Dir dir2 = t2.dir;
+//                t1.setDir(changeDir(dir1));
+//                t2.setDir(changeDir(dir2));
+                t1.back();
+                t2.back();
                 return true;
             }
         }

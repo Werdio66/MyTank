@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  *  墙
  */
-public class Square extends GameObject {
+public class Wall extends GameObject {
     // 位置
     private int x, y;
 
@@ -16,11 +16,9 @@ public class Square extends GameObject {
     public static int Height = ResourceMgr.square.getHeight();
 
     public Rectangle rect = new Rectangle();
-    private GameModel gameModel;
-    public Square(int x, int y, GameModel gameModel){
+    public Wall(int x, int y){
         this.x = x;
         this.y = y;
-        this.gameModel = gameModel;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = Width;
@@ -28,6 +26,10 @@ public class Square extends GameObject {
     }
     @Override
     protected void paint(Graphics g) {
-        g.drawImage(ResourceMgr.square,x,y,null);
+        Color color = g.getColor();
+        g.setColor(Color.cyan);
+        g.fillRect(x,y,90,90);
+        g.setColor(color);
+        //g.drawImage(ResourceMgr.square,x,y,null);
     }
 }
